@@ -7,7 +7,8 @@ WORKDIR /app
 RUN npm install -g pnpm
 
 # Copy package files
-COPY package.json pnpm-lock.yaml ./
+COPY package.json ./
+RUN if [ -f pnpm-lock.yaml ]; then cp pnpm-lock.yaml ./; fi
 
 # Install dependencies
 RUN pnpm install
@@ -26,7 +27,7 @@ WORKDIR /app
 RUN npm install -g pnpm
 
 # Copy built files and dependencies
-COPY --from=builder /app/package.json /app/pnpm-lock.yaml ./
+COPY --from=builder /app/package.json ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/node_modules ./node_modules
