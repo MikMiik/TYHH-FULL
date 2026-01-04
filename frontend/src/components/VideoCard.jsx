@@ -1,4 +1,4 @@
-import videoImg from '/placeholder-image.svg'
+import videoImg from '../assets/images/placeholder-image.jpg'
 
 import { Card, CardContent, CardMedia, Typography, Button, Stack } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
