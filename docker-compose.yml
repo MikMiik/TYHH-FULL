@@ -45,7 +45,7 @@ services:
     container_name: tyhh-backend
     restart: unless-stopped
     ports:
-      - "3002:3002"
+      - "4002:3002"
     environment:
       NODE_ENV: production
       DB_HOST: mysql
@@ -79,7 +79,7 @@ services:
     container_name: tyhh-frontend
     restart: unless-stopped
     ports:
-      - "5173:80"
+      - "4173:80"
     depends_on:
       - backend
     networks:
@@ -93,7 +93,7 @@ services:
     container_name: tyhh-admin
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "4000:3000"
     environment:
       NODE_ENV: production
       NEXT_PUBLIC_API_URL: http://backend:3002/api/v1
