@@ -40,6 +40,7 @@ git push -u origin main
 ## ✅ Verification
 
 Sau khi push, check trên GitHub:
+
 - ✅ Code đã xuất hiện
 - ✅ README.md hiển thị đẹp
 - ✅ `.env` file KHÔNG có (đã bị .gitignore)
@@ -89,19 +90,24 @@ Trước khi push:
 ## 🆘 Common Issues
 
 ### Lỗi: "remote origin already exists"
+
 ```bash
 git remote remove origin
 git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
 ```
 
 ### Lỗi: Permission denied
+
 Sử dụng Personal Access Token thay vì password:
+
 1. GitHub Settings → Developer settings → Personal access tokens
 2. Generate new token với `repo` scope
 3. Sử dụng token làm password khi push
 
 ### Large files warning
+
 Nếu có warning về files lớn, check `.gitignore` đã exclude:
+
 - node_modules
 - uploads
 - .next

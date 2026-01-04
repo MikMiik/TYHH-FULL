@@ -32,6 +32,7 @@ cp .env.example backend/.env
 ```
 
 **Tạo JWT Secret:**
+
 ```bash
 # Linux/Mac
 openssl rand -hex 32
@@ -50,33 +51,43 @@ docker-compose up -d --build
 docker-compose logs -f
 ```
 
-### Bước 4: Khởi tạo Database
+**📝 Note:** Database sẽ tự động được import từ file `backend/database/init.sql` khi MySQL container khởi động lần đầu. Nếu bạn đã chạy MySQL container trước đó, cần xóa volume để import lại:
 
 ```bash
-# Chạy migrations
-docker-compose exec backend npm run db:migrate
+# Stop và xóa volumes
+docker-compose down -v
 
-# (Optional) Seed data
-docker-compose exec backend npm run db:seed:all
+# Start lại
+docker-compose up -d --build
+```
+
+### Bước 4: Verify Database
+
+```bash
+# Check database đã được import
+docker-compose exec mysql mysql -uroot -p${DB_PASS} tyhh -e "SHOW TABLES;"
+
+# Xem số lượng users
+docker-compose exec mysql mysql -uroot -p${DB_PASS} tyhh -e "SELECT COUNT(*) FROM users;"
 ```
 
 ### Bước 5: Truy cập Application
 
 - 🌐 **Frontend (User):** http://localhost:5173
-- 👨‍💼 **Admin Dashboard:** http://localhost:3000  
+- 👨‍💼 **Admin Dashboard:** http://localhost:3000
 - 🔌 **Backend API:** http://localhost:3002/api/v1
 - 🗄️ **MySQL:** localhost:3306
 - 📦 **Redis:** localhost:6379
 
 ## 📦 Services
 
-| Service | Description | Port |
-|---------|-------------|------|
-| Frontend | React + Vite + MUI | 5173 |
-| Admin | Next.js Dashboard | 3000 |
-| Backend | Node.js + Express API | 3002 |
-| MySQL | Database | 3306 |
-| Redis | Cache & Sessions | 6379 |
+| Service  | Description           | Port |
+| -------- | --------------------- | ---- |
+| Frontend | React + Vite + MUI    | 5173 |
+| Admin    | Next.js Dashboard     | 3000 |
+| Backend  | Node.js + Express API | 3002 |
+| MySQL    | Database              | 3306 |
+| Redis    | Cache & Sessions      | 6379 |
 
 ## 🛠️ Development Commands
 
@@ -145,6 +156,8 @@ docker system prune -a --volumes
 TYHH-Fullstack/
 ├── backend/              # Node.js + Express API
 │   ├── src/
+│   ├── database/         # SQL dumps for auto-import
+│   │   └── init.sql      # Initial database (auto-imported)
 │   ├── Dockerfile
 │   └── package.json
 ├── frontend/             # React + Vite + MUI
@@ -158,7 +171,8 @@ TYHH-Fullstack/
 ├── docker-compose.yml    # Orchestration file
 ├── .env.example         # Environment template
 ├── .gitignore
-└── README.md
+├── README.md
+└── DATABASE.md          # Database setup guide
 ```
 
 ## ⚙️ Configuration
@@ -166,10 +180,12 @@ TYHH-Fullstack/
 ### Environment Variables
 
 **Required:**
+
 - `DB_PASS` - MySQL root password
 - `JWT_SECRET` - Secret key cho JWT tokens
 
 **Optional:**
+
 - `MAIL_AUTH_USER` / `MAIL_AUTH_PASS` - Email configuration
 - `OPENAI_API_KEY` - Nếu sử dụng AI features
 - `GOOGLE_CLIENT_ID` - Nếu sử dụng Google OAuth
@@ -183,7 +199,7 @@ Nếu ports bị conflict, thay đổi trong `docker-compose.yml`:
 services:
   backend:
     ports:
-      - "3002:3002"  # Host:Container
+      - "3002:3002" # Host:Container
 ```
 
 ## 🐛 Troubleshooting
@@ -207,6 +223,7 @@ docker-compose exec backend npm run db:migrate
 ### Frontend không kết nối được Backend
 
 Kiểm tra `VITE_API_URL` trong `frontend/.env`:
+
 ```env
 VITE_API_URL=http://localhost:3002/api/v1
 ```
@@ -244,7 +261,7 @@ npm install
 cp .env.example .env
 npm start
 
-# Frontend  
+# Frontend
 cd frontend
 npm install
 cp .env.example .env
