@@ -5,7 +5,7 @@ const router = express.Router();
 const authRouter = require("./auth.route");
 const userRouter = require("./user.route");
 const cityRouter = require("./city.route");
-const imagekitRouter = require("./imagekit.route");
+// const imagekitRouter = require("./imagekit.route"); // Commented out - requires ImageKit credentials
 const uploadRouter = require("./upload.route");
 const socialRouter = require("./social.route");
 const topicRouter = require("./topic.route");
@@ -21,7 +21,7 @@ const playgroundRouter = require("./playground.route");
 
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
-router.use("/imagekit", imagekitRouter);
+// router.use("/imagekit", imagekitRouter); // Commented out - requires ImageKit credentials
 router.use("/upload", uploadRouter);
 router.use("/socials", socialRouter);
 router.use("/cities", cityRouter);

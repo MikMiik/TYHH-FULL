@@ -11,7 +11,7 @@ const topicRouter = require("./topic.route");
 const livestreamRouter = require("./livestream.route");
 const documentRouter = require("./document.route");
 const dashboardRouter = require("./dashboard.route");
-const imagekitRouter = require("./imagekit.route");
+// const imagekitRouter = require("./imagekit.route"); // Commented out - requires ImageKit credentials
 const systemRouter = require("./system.route");
 const scheduleRouter = require("./schedule.route");
 const uploadRouter = require("./upload.route");
@@ -30,7 +30,7 @@ router.use("/topics", topicRouter);
 router.use("/livestreams", livestreamRouter);
 router.use("/documents", documentRouter);
 router.use("/dashboard", dashboardRouter);
-router.use("/imagekit", imagekitRouter);
+// router.use("/imagekit", imagekitRouter); // Commented out - requires ImageKit credentials
 router.use("/system", systemRouter);
 router.use("/schedules", scheduleRouter);
 router.use("/upload", uploadRouter);
