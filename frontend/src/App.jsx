@@ -21,6 +21,14 @@ import 'react-toastify/dist/ReactToastify.css'
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_APP_GOOGLE_CLIENT_ID || ''
 
 function App() {
+  const GoogleWrapper = ({ children }) => {
+    // Only wrap with GoogleOAuthProvider if client ID is available
+    if (GOOGLE_CLIENT_ID) {
+      return <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>{children}</GoogleOAuthProvider>
+    }
+    return <>{children}</>
+  }
+
   return (
     <>
       <InitColorSchemeScript
@@ -28,7 +36,7 @@ function App() {
         defaultColorScheme="light"
         storageKey="mui-color-scheme"
       />
-      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <GoogleWrapper>
         <ErrorBoundary>
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
@@ -57,7 +65,7 @@ function App() {
           </Provider>
         </ErrorBoundary>
         <ComponentPreloader />
-      </GoogleOAuthProvider>
+      </GoogleWrapper>
     </>
   )
 }
