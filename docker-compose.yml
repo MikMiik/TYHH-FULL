@@ -46,12 +46,13 @@ services:
     restart: unless-stopped
     ports:
       - "3002:3002"
-    env_file:
-      - ./backend/.env
     environment:
       NODE_ENV: production
       DB_HOST: mysql
       DB_PORT: 3306
+      DB_USER: root
+      DB_PASS: ${DB_PASS:-changeme}
+      DB_NAME: ${DB_NAME:-tyhh}
       REDIS_URL: redis://redis:6379
       REDIS_HOST: redis
       REDIS_PORT: 6379
