@@ -18,12 +18,12 @@ import ErrorBoundary from './components/ErrorBoundary'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_APP_GOOGLE_CLIENT_ID || ''
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_APP_GOOGLE_CLIENT_ID
 
 function App() {
   const GoogleWrapper = ({ children }) => {
     // Only wrap with GoogleOAuthProvider if client ID is available
-    if (GOOGLE_CLIENT_ID) {
+    if (GOOGLE_CLIENT_ID && GOOGLE_CLIENT_ID.trim() !== '') {
       return <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>{children}</GoogleOAuthProvider>
     }
     return <>{children}</>
