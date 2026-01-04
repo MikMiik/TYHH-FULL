@@ -1,0 +1,28 @@
+import AppSidebar from "@/components/AppSidebar";
+import Navbar from "@/components/Navbar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/sonner";
+import { cookies } from "next/headers";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const cookieStore = await cookies();
+  const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
+
+  return (
+    <ProtectedRoute>
+    <SidebarProvider defaultOpen={defaultOpen}>
+      <AppSidebar />
+      <main className="w-full">
+        <Navbar />
+        <div className="px-4">{children}</div>
+      </main>
+      <Toaster />
+    </SidebarProvider>
+    </ProtectedRoute>
+  );
+}
